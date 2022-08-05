@@ -82,5 +82,37 @@ class Contact
             return false;
         }
     }
+
+    public function update()
+    {
+        $query = 'UPDATE ' . $this->table . ' SET name = :name, lastName = :lastName, email = :email, phoneNum1 = :phoneNum1, phoneNum2 = :phoneNum2 WHERE id = :id';
+
+        $statement = $this->conn->prepare($query);
+
+        $this->name = htmlspecialchars(strip_tags($this->name));
+        $this->lastName = htmlspecialchars(strip_tags($this->lastName));
+        $this->email = htmlspecialchars(strip_tags($this->email));
+        $this->phoneNum1 = htmlspecialchars(strip_tags($this->phoneNum1));
+        $this->phoneNum2 = htmlspecialchars(strip_tags($this->phoneNum2));
+        $this->id = htmlspecialchars(strip_tags($this->id));
+
+        $statement->bindParam(':name', $this->name);
+        $statement->bindParam(':lastName', $this->lastName);
+        $statement->bindParam(':email', $this->email);
+        $statement->bindParam(':phoneNum1', $this->phoneNum1);
+        $statement->bindParam(':phoneNum2', $this->phoneNum2);
+        $statement->bindParam(':id', $this->id);
+
+        if ($statement->execute())
+        {
+            return true;
+        }
+        else
+        {
+            printf($statement->eror);
+
+            return false;
+        }
+    }
 }
  ?>

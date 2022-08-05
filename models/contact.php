@@ -114,5 +114,27 @@ class Contact
             return false;
         }
     }
+
+    public function delete()
+    {
+        $query = 'DELETE FROM ' . $this->table . ' WHERE id = :id';
+
+        $statement = $this->conn->prepare($query);
+
+        $this->id = htmlspecialchars(strip_tags($this->id));
+
+        $statement->bindParam(':id', $this->id);
+
+        if ($statement->execute())
+        {
+            return true;
+        }
+        else
+        {
+            printf($statement->eror);
+
+            return false;
+        }
+    }
 }
  ?>

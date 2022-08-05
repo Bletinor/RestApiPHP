@@ -19,10 +19,16 @@ class Contact
         $this->conn = $db;
     }
 
-    //get posts?
+    //get contacts
     public function get()
     {
         $query = 'SELECT id, name, lastName, email, phoneNum1, phoneNum2 FROM ' . $this->table . ' ';
+
+        $statement = $this->conn->prepare($query);
+
+        $statement->execute();
+
+        return $statement;
     }
 }
  ?>

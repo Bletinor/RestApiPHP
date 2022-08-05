@@ -1,27 +1,31 @@
 <?php
+//header info
 header('Acces-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 
 include_once '../../config/config.php';
 include_once '../../models/contact.php';
 
-//initiates db object and connects to the server
+//initiates database object and connects to the server
 $database = new Database();
 $databaseConn = $database->connect();
 
 //Initiates new contact object
 $contact = new Contact($databaseConn);
 
-//test query
+//get all contacts query query
 $result = $contact->get();
 
+//get row count
 $rows = $result->rowCount();
 
+//checks if there are contacts if not prints no contacts found
 if ($rows > 0)
 {
+    //creates an array of contacts
     $contactsArray = array();
-    $contactsArray['data'] = array();
 
+    //while there are rows to fetch, extract data from row and adds it to contactItem array
     while ($row = $result->fetch(PDO::FETCH_ASSOC))
     {
         extract($row);
@@ -35,10 +39,11 @@ if ($rows > 0)
             'phoneNum2' => $phoneNum2,
         );
 
-        //push to data
-        array_push($contactsArray['data'], $contactItem);
+        //push data from contactItem to contactsArray
+        array_push($contactsArray, $contactItem);
     }
 
+    //turns get data to json and sends to output
     echo json_encode($contactsArray);
 }
 else

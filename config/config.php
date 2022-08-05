@@ -1,12 +1,13 @@
 <?php
 class Database{
-    //Parameters
+    //Parameters for database connection
     private $host = 'localhost';
     private $dbname = 'apidb';
     private $username = 'root';
     private $password = 'Oq/E4GEb]LPLu4yQ';
     private $conn;
 
+    //function for connection with a database (preset to connect to a mysql server) thorigh PDO
     public function connect()
     {
         $this->conn = null;

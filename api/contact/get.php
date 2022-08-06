@@ -13,7 +13,7 @@ $databaseConn = $database->connect();
 //Initiates new contact object
 $contact = new Contact($databaseConn);
 
-//get all contacts query query
+//get all contacts query
 $result = $contact->get();
 
 //get row count

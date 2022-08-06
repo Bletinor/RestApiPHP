@@ -1,9 +1,8 @@
 <?php
 class Contact 
 {
-    //Database properties (database connection and table to communicate with)
+    //Database properties (database connection)
     private $conn;
-    private $table = "contacts";
 
     //Contact properties
     public $id;
@@ -22,11 +21,8 @@ class Contact
     //get full list ofcontacts
     public function get()
     {
-        //creates a query
-        $query = 'SELECT id, name, lastName, email, phoneNum1, phoneNum2 FROM ' . $this->table . '  ORDER BY id DESC';
-
         //prepare statement with the query
-        $statement = $this->conn->prepare($query);
+        $statement = $this->conn->prepare('SELECT id, name, lastName, email, phoneNum1, phoneNum2 FROM contacts  ORDER BY id DESC');
 
         //executes the query
         $statement->execute();
@@ -37,14 +33,13 @@ class Contact
     //gets a single contact
     public function getSingle()
     {
-        //creates a query
-        $query = 'SELECT id, name, lastName, email, phoneNum1, phoneNum2 FROM ' . $this->table . ' WHERE id = ? LIMIT 0,1';
-
         //prepare statement with the query
-        $statement = $this->conn->prepare($query);
+        $statement = $this->conn->prepare('SELECT * FROM contacts WHERE id = :id LIMIT 0,1');
+
+        $this->id = htmlspecialchars(strip_tags($this->id));
 
         //binds a value to the positional id parameter in the statement
-        $statement->bindParam(1, $this->id);
+        $statement->bindParam(':id', $this->id);
 
         //executes the query
         $statement->execute();
@@ -63,11 +58,8 @@ class Contact
     //post a contact
     public function post()
     {
-        //creates a query
-        $query = 'INSERT INTO ' . $this->table . ' SET name = :name, lastName = :lastName, email = :email, phoneNum1 = :phoneNum1, phoneNum2 = :phoneNum2';
-
         //prepare statement with the query
-        $statement = $this->conn->prepare($query);
+        $statement = $this->conn->prepare('INSERT INTO contacts SET name = :name, lastName = :lastName, email = :email, phoneNum1 = :phoneNum1, phoneNum2 = :phoneNum2');
 
         //clears all data before binding
         $this->name = htmlspecialchars(strip_tags($this->name));
@@ -97,11 +89,8 @@ class Contact
 
     public function update()
     {
-        //creates a query
-        $query = 'UPDATE ' . $this->table . ' SET name = :name, lastName = :lastName, email = :email, phoneNum1 = :phoneNum1, phoneNum2 = :phoneNum2 WHERE id = :id';
-
         //prepare statement with the query
-        $statement = $this->conn->prepare($query);
+        $statement = $this->conn->prepare('UPDATE contacts SET name = :name, lastName = :lastName, email = :email, phoneNum1 = :phoneNum1, phoneNum2 = :phoneNum2 WHERE id = :id');
 
         //clears all data before binding
         $this->name = htmlspecialchars(strip_tags($this->name));
@@ -133,11 +122,8 @@ class Contact
 
     public function delete()
     {
-        //creates a query
-        $query = 'DELETE FROM ' . $this->table . ' WHERE id = :id';
-
         //prepare statement with the query
-        $statement = $this->conn->prepare($query);
+        $statement = $this->conn->prepare('DELETE FROM contacts WHERE id = :id');
 
         //clears id data before binding
         $this->id = htmlspecialchars(strip_tags($this->id));

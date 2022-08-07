@@ -61,7 +61,7 @@ class Contact
         //prepare statement with the query
         $statement = $this->conn->prepare('INSERT INTO contacts SET name = :name, lastName = :lastName, email = :email, phoneNum1 = :phoneNum1, phoneNum2 = :phoneNum2');
 
-        //clears all data before binding
+        //clears all data from php and html tags and turns it to html special chars before binding. This is for security
         $this->name = htmlspecialchars(strip_tags($this->name));
         $this->lastName = htmlspecialchars(strip_tags($this->lastName));
         $this->email = htmlspecialchars(strip_tags($this->email));
@@ -139,6 +139,30 @@ class Contact
         else
         {
             printf($statement->eror);
+            return false;
+        }
+    }
+
+    //Bonus 2: add one or several phone numbers to eachj contact
+    public function updatePhoneNum()
+    {
+        $statement = $this->conn->prepare('UPDATE contacts SET phoneNum1 = :phoneNum1, phoneNum2 = :phoneNum2 WHERE id = :id');
+
+        $this->phoneNum1 = htmlspecialchars(strip_tags($this->phoneNum1));
+        $this->phoneNum2 = htmlspecialchars(strip_tags($this->phoneNum2));
+        $this->id = htmlspecialchars(strip_tags($this->id));
+
+        $statement->bindParam(':phoneNum1', $this->phoneNum1);
+        $statement->bindParam(':phoneNum2', $this->phoneNum2);
+        $statement->bindParam(':id', $this->id);
+
+        if ($statement->execute())
+        {
+            return true;
+        }
+        else
+        {
+            printf($statement->error);
             return false;
         }
     }

@@ -14,7 +14,7 @@ The api/contact folder contains the API methods to interact with the database.
 
 In the config/config.php file the parameters and function to connect to a database are defined.
 
-The contact class is defined in models/contact.php. The class defines all properties of a contact object, functions to interact with the object (read, create, delete, etc). Thus functions are called by the API.
+The contact class is defined in models/contact.php. The class defines all properties of a contact object, functions to interact with the object (read, create, delete, etc). This functions are called by the API.
 
 ## Security
 
@@ -22,6 +22,6 @@ All queries are parameterized to prevente SQL injection.
 
 ## Bonuses
 
-Teh first bonus is applied in the definition of the contact class, in the functions that require an input, like post().
+The first bonus is applied in the definition of the contact class, in the functions that require an input like post().
 
-The second bonus is the pdatePhoneNum() in the models/contact.php file. This function is used to add phone numbers to contacts that are already created.
+The second bonus is the updatePhoneNum() in the models/contact.php file. This function is used to add phone numbers to contacts that are already created.

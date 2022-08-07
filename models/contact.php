@@ -75,6 +75,12 @@ class Contact
         $statement->bindParam(':phoneNum1', $this->phoneNum1);
         $statement->bindParam(':phoneNum2', $this->phoneNum2);
 
+        if (empty($this->name) | empty($this->lastName) | empty($this->email))
+        {
+            echo "Wrong input";
+            return false;
+        }
+
         //executes query, returns error if something goes wrong
         if ($statement->execute())
         {
@@ -107,6 +113,12 @@ class Contact
         $statement->bindParam(':phoneNum1', $this->phoneNum1);
         $statement->bindParam(':phoneNum2', $this->phoneNum2);
         $statement->bindParam(':id', $this->id);
+
+        if (empty($this->name) | empty($this->lastName) | empty($this->email))
+        {
+            echo "Wrong input";
+            return false;
+        }
 
         //executes query, returns error if something goes wrong
         if ($statement->execute())
